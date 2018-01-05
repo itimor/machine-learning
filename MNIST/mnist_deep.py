@@ -8,7 +8,6 @@ from __future__ import print_function
 import argparse
 import sys
 import os
-import tempfile
 
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -102,9 +101,6 @@ def bias_variable(shape):
 
 
 def main(_):
-  if tf.gfile.Exists(FLAGS.saver_dir):
-    tf.gfile.DeleteRecursively(FLAGS.saver_dir)
-  tf.gfile.MakeDirs(FLAGS.saver_dir)
   # Import data
   mnist = input_data.read_data_sets(FLAGS.data_dir)
 
@@ -134,20 +130,34 @@ def main(_):
     sess.run(tf.global_variables_initializer())
     # 定义模型保存对象
     saver = tf.train.Saver()
-    # 模型保存目录
-    model_name = 'ckpt'
+    # 创建模型保存目录
+    model_dir = "saver/mnist_deep"
+    model_name = "ckpt"
+    if FLAGS.isTrain:
+      for i in range(2000):
+        batch = mnist.train.next_batch(50)
+        if i % 100 == 0:
+          train_accuracy = accuracy.eval(feed_dict={
+              x: batch[0], y_: batch[1], keep_prob: 1.0})
+          print('step %d, training accuracy %g' % (i, train_accuracy))
+        train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
-    for i in range(1000):
-      batch = mnist.train.next_batch(50)
-      if i % 100 == 0:
-        train_accuracy = accuracy.eval(feed_dict={
-            x: batch[0], y_: batch[1], keep_prob: 1.0})
-        print('step %d, training accuracy %g' % (i, train_accuracy))
-      train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
-
-    # 保存模型
-    saver.save(sess, os.path.join(FLAGS.saver_dir, model_name))
-    print("保存模型成功！")
+      # 保存模型
+      saver.save(sess, os.path.join(model_dir, model_name))
+      print("保存模型成功！")
+    else:
+      # 恢复模型
+      saver.restore(sess, os.path.join(model_dir, model_name))
+      print("恢复模型成功！")
+      # 取出一个测试图片
+      idx = 60
+      img = mnist.test.images[idx]
+      # 根据模型计算结果
+      ret = sess.run(x, feed_dict={x: img.reshape(1, 784)})
+      print("计算模型结果成功！")
+      # 显示测试结果
+      print("预测结果:%d" % (ret.argmax()))
+      print("实际结果:%d" % (mnist.test.labels[idx].argmax()))
 
 
 if __name__ == '__main__':
@@ -159,9 +169,9 @@ if __name__ == '__main__':
       help='Directory to put the input data.'
   )
   parser.add_argument(
-      '--saver_dir',
-      type=str,
-      default='saver/mnist_deep',
+      '--isTrain',
+      type=bool,
+      default=True,
       help='Directory to put the input data.'
   )
   FLAGS, unparsed = parser.parse_known_args()

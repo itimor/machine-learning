@@ -30,10 +30,13 @@ def main(mnist, isTrain):
         # 定义模型保存对象
         saver = tf.train.Saver()
         # 创建模型保存目录
-        model_dir = "saver/mnist_train"
+        model_dir = "saver/mnist_graph"
         model_name = "ckpt"
         if not os.path.exists(model_dir):
             os.mkdir(model_dir)
+
+        tf.add_to_collection('x', x)
+        tf.add_to_collection('y', y)
         if isTrain:
             # 循环训练1000次
             for i in range(1000):
@@ -45,7 +48,11 @@ def main(mnist, isTrain):
             print("保存模型成功！")
         else:
             # 恢复模型
-            saver.restore(sess, os.path.join(model_dir, model_name))
+            new_saver = tf.train.import_meta_graph('saver/mnist_graph/ckpt.meta')
+            new_saver.restore(sess, os.path.join(model_dir, model_name))
+            x = tf.get_collection('x')[0]
+            y = tf.get_collection('y')[0]
+
             print("恢复模型成功！")
             # 取出一个测试图片
             idx = 60
