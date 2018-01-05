@@ -250,13 +250,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--input_data_dir',
       type=str,
-      default='../../MNIST_data',
+      default='MNIST_data/',
       help='Directory to put the input data.'
   )
   parser.add_argument(
       '--log_dir',
       type=str,
-      default='../../MNIST_data/logs/',
+      default='MNIST_data/logs/',
       help='Directory to put the log data.'
   )
   parser.add_argument(

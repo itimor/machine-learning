@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-# 导入mnist数据库
 from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 import tensorflow as tf
 import os
+
+# 导入mnist数据库
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+
 # 定义输入变量
 x = tf.placeholder(tf.float32, [None, 784])
 # 定义参数
@@ -28,7 +30,7 @@ sess.run(init)
 # 定义模型保存对象
 saver = tf.train.Saver()
 # 循环训练1000次
-for i in range(1000):
+for i in range(10000):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={x: batch_xs, y_:batch_ys})
 print("训练完成！")

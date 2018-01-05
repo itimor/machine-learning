@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-# 导入mnist数据库
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 import os
 
-mnist = input_data.read_data_sets('../../MNIST_data',one_hot=True)
+# 导入mnist数据库
+mnist = input_data.read_data_sets('MNIST_data/')
+
 # 创建会话
 sess = tf.Session()
 # 定义输入变量
@@ -19,16 +20,14 @@ y = tf.nn.softmax(tf.matmul(x, W) + b)
 # 定义模型保存对象
 saver = tf.train.Saver([W, b])
 # 恢复模型
-model_dir = "saver/mnist_train"
-model_name = "ckpt"
-saver.restore(sess, os.path.join(model_dir, model_name))
+saver.restore(sess, "saver/mnist_train/ckpt")
 print("恢复模型成功！")
 # 取出一个测试图片
-idx = 5
+idx=0
 img = mnist.test.images[idx]
 # 根据模型计算结果
 ret = sess.run(y, feed_dict = {x : img.reshape(1, 784)})
 print("计算模型结果成功！")
 # 显示测试结果
 print("预测结果:%d"%(ret.argmax()))
-print("实际结果:%d"%(mnist.test.labels[idx].argmax()))
+print("实际结果:%d"%(mnist.test.labels[idx]))

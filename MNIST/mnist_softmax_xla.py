@@ -97,7 +97,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--data_dir',
       type=str,
-      default='../../MNIST_data',
+      default='MNIST_data/',
       help='Directory for storing input data')
   parser.add_argument(
       '--xla', type=bool, default=True, help='Turn xla via JIT on')

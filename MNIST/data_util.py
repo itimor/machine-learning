@@ -14,10 +14,10 @@ class DataUtils(object):
     使用方法如下
     from data_util import DataUtils
     def main():
-        trainfile_X = '../../MNIST_data/train-images.idx3-ubyte'
-        trainfile_y = '../../MNIST_data/train-labels.idx1-ubyte'
-        testfile_X = '../../MNIST_data/t10k-images.idx3-ubyte'
-        testfile_y = '../../MNIST_data/t10k-labels.idx1-ubyte'
+        trainfile_X = 'MNIST_data/train-images.idx3-ubyte'
+        trainfile_y = 'MNIST_data/train-labels.idx1-ubyte'
+        testfile_X = 'MNIST_data/t10k-images.idx3-ubyte'
+        testfile_y = 'MNIST_data/t10k-labels.idx1-ubyte'
 
         train_X = DataUtils(filename=trainfile_X).getImage()
         train_y = DataUtils(filename=trainfile_y).getLabel()
@@ -105,10 +105,10 @@ class DataUtils(object):
 
 
 if __name__ == '__main__':
-    trainfile_X = '../../MNIST_data/train-images.idx3-ubyte'
-    trainfile_y = '../../MNIST_data/train-labels.idx1-ubyte'
-    testfile_X = '../../MNIST_data/t10k-images.idx3-ubyte'
-    testfile_y = '../../MNIST_data/t10k-labels.idx1-ubyte'
+    trainfile_X = 'MNIST_data/train-images.idx3-ubyte'
+    trainfile_y = 'MNIST_data/train-labels.idx1-ubyte'
+    testfile_X = 'MNIST_data/t10k-images.idx3-ubyte'
+    testfile_y = 'MNIST_data/t10k-labels.idx1-ubyte'
 
     train_X = DataUtils(filename=trainfile_X).getImage()
     train_y = DataUtils(filename=trainfile_y).getLabel()
@@ -117,8 +117,8 @@ if __name__ == '__main__':
     print("test_X: %s" % test_X)
 
     # 以下内容是将图像保存到本地文件中
-    path_trainset = "../../MNIST_data/imgs_train"
-    path_testset = "../../MNIST_data/imgs_test"
+    path_trainset = "MNIST_data/imgs_train"
+    path_testset = "MNIST_data/imgs_test"
     if not os.path.exists(path_trainset):
        os.mkdir(path_trainset)
     if not os.path.exists(path_testset):
