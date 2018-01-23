@@ -5,3 +5,4 @@ db.json
 .idea/
 saver/
 MNIST_data/
+.ipynb_checkpoints/
