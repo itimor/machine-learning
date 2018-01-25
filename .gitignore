@@ -2,8 +2,9 @@
 Thumbs.db
 db.json
 *.log
+*.pkl
 .idea/
-saver/
-MNIST_data/
+Tensorflow/saver/
+Tensorflow/MNIST_data/
 .ipynb_checkpoints/
-data/
+PyTorch/data/
